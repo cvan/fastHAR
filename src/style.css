@@ -1,0 +1,123 @@
+* {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+body {
+    font-family: "Source Sans Pro", sans-serif;
+    margin: 30px;
+}
+
+button, select {
+    font: inherit;
+}
+
+button {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: #aaa;
+    border-radius: 4px;
+    color: #666;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px 2px;
+}
+
+.refresh::before {
+    color: #999;
+    content: "\21BB";  /* ↻ */
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.refresh:hover {
+    background-color: #eee;
+    border-color: #aaa;
+    border-bottom-color: #666;
+    color: #333;
+}
+
+.refresh:hover::before {
+    color: #666;
+}
+
+
+.header {
+    border-bottom: 1px solid #ccc;
+    float: left;
+    margin: 0 0 30px;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+h1, h1 a {
+    color: #333;
+}
+
+h1 {
+    float: left;
+    line-height: 38px;
+}
+
+h1 a {
+    text-decoration: none;
+}
+
+h1 a:hover {
+    color: #666;
+}
+
+h2 {
+    color: #999;
+    float: right;
+    position: relative;
+    bottom: -5px;
+}
+
+main {
+    clear: both;
+}
+
+.chart {
+    margin: 0 auto 15px;
+    text-align: center;
+}
+
+iframe {
+    border: 1px solid transparent;
+    height: 310px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+iframe[src] {
+    border-color: #ccc;
+}
+
+rect:hover {
+    cursor: pointer;
+}
+
+g.y.axis {
+    fill: #999;
+    font-size: 9px;
+}
+
+g.y.axis .tick {
+    fill: #333;
+    font-size: 8px;
+}
+
+.no-data {
+    color: #999;
+    font-size: 48px;
+    font-weight: 600;
+}

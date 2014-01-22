@@ -1,0 +1,13 @@
+function url(name, data) {
+    var uri = {
+        chart: 'http://localhost:9999/charts/{stat}?url={url}',
+        har_fetch: 'http://localhost:9999/har/fetch?ref={ref}&url={url}',
+        har_view: 'http://localhost:9000/?url=http://localhost:9999/har/history?ref={ref}&url={url}'
+    }[name];
+    if (uri) {
+        Object.keys(data).forEach(function(k) {
+            uri = uri.replace('{' + k + '}', data[k] || '');
+        });
+    }
+    return uri;
+}
