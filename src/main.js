@@ -15,7 +15,7 @@
     var search = parseQueryString(window.location.search.substr(1));
 
     if (search.stat) {
-        $('.stat [value="' + search.stat + '"]').prop('selected', true);
+        $('.stat [value="' + search.stat + '"]').attr('selected', '');
     }
 
     var $stat = $('.stat');
@@ -90,7 +90,7 @@
         search.url = a.href;
 
         $('h1 a').text(search.url).attr('href', search.url);
-        $('title').text(search.url + ' | fastHAR');
+        $('title').text(search.url + ' | ' + $stat.find('[selected]').text() + ' | fastHAR');
 
         var chartUrl = url('chart',
                            {stat: search.stat, ref: search.ref, url: search.url});
