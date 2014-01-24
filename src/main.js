@@ -97,7 +97,6 @@
         case 'times':
             yAxisText = 'Time (seconds)';
             yAxisFormat = function(d) {
-                console.log(((new Number(d) / 1000) % 60) )
                 if (typeof d === 'number') {
                     return ((new Number(d) / 1000) % 60);
                 }
@@ -178,8 +177,10 @@
                 },
                 legend: {
                     item: {
-                        padding: {top:100},
-                        width: '158'
+                        padding: {
+                            top: 100
+                        },
+                        width: 142
                     }
                 },
                 point: {
