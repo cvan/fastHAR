@@ -14,8 +14,27 @@
     }
     var search = parseQueryString(window.location.search.substr(1));
 
-    if (search.stat) {
-        $('.stat [value="' + search.stat + '"]').attr('selected', '');
+    if (search.fasthar_api) {
+        api_urls.fasthar = search.fasthar_api;
+    }
+    if (search.chromhar_api) {
+        api_urls.chromehar = search.chromehar_api;
+    }
+
+    var urls = {
+        chart: api_urls.fasthar + '/charts/{stat}?url={url}',
+        har_fetch: api_urls.fasthar + '/har/fetch?ref={ref}&url={url}',
+        har_view: api_urls.chromehar + '/?url=' + api_urls.fasthar + '/har/history?ref={ref}&url={url}'
+    };
+
+    function url(name, data) {
+        var uri = urls[name];
+        if (uri) {
+            Object.keys(data).forEach(function(k) {
+                uri = uri.replace('{' + k + '}', data[k] || '');
+            });
+        }
+        return uri;
     }
 
     var $stat = $('.stat');
@@ -31,6 +50,23 @@
         window.location.search = qs;
     });
 
+    if (!search.url) {
+        $('h1').html('<form>' +
+            '<input type="hidden" name="stat" value="' +
+            (search.stat || 'sizes') +
+            '"><input type="name" class="large" name="url" ' +
+            'placeholder="Enter URL here"></form>'
+        );
+    } else {
+        if (!search.stat) {
+            $stat.val('sizes').trigger('change');
+        }
+    }
+
+    if (search.stat) {
+        $stat.find('[value="' + search.stat + '"]').attr('selected', '');
+    }
+
     $('.refresh').on('click', function() {
         harFetch();
         setTimeout(function() {
@@ -43,10 +79,6 @@
     }
 
     $stat.removeClass('hidden');
-
-    if (!search.stat) {
-        $stat.val('sizes').trigger('change');
-    }
 
     var yAxisFormat;
     var yAxisText;
@@ -100,7 +132,7 @@
             if (numItems < 2) {
                 // Do not show chart data until there are at least two data points.
                 harFetch();
-                $('#chart').html($('<p class="no-data">No data yet</p>'));
+                $('main').html('<p class="no-data">No data yet</p>');
                 return;
             }
 

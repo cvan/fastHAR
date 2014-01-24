@@ -1,2 +1,1 @@
-web: python -m SimpleHTTPServer $PORT
-#web: npm install && ./node_modules/grunt/.bin/grunt server
+web: pushd src; python -m SimpleHTTPServer $PORT; popd

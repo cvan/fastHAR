@@ -21,7 +21,7 @@ To install the dependencies used for our development environment:
 
 To set up the URLs:
 
-    cp src/urls.js.dist src/urls.js
+    cp src/api_urls.js.dist src/api_urls.js
 
 
 ## Development

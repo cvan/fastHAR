@@ -2,6 +2,7 @@
 *.har
 *.swp*
 .DS_Store
+api_urls.js
 db/*/*
 node_modules/
 npm-debug.log
