@@ -11,9 +11,9 @@ data from captured network traffic. See
 
 ## Installation
 
-We use [grunt](http://gruntjs.com/):
+We use [gulp](http://gulpjs.com/):
 
-    npm install grunt-cli -g
+    npm install gulp -g
 
 To install the dependencies used for our development environment:
 
@@ -29,4 +29,4 @@ To set up the URLs:
 Load from a page with an origin (i.e., a server). If you're running locally,
 use grunt to fire up a local server:
 
-    DEBUG=1 OPEN=1 grunt connect
+    DEBUG=1 OPEN=1 gulp connect

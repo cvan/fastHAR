@@ -1,1 +1,1 @@
-web: pushd src; python -m SimpleHTTPServer $PORT; popd
+web: npm install -g gulp; gulp connect
