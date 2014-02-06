@@ -3,7 +3,7 @@ var gulp = require('gulp');
 
 
 gulp.task(
-    'connect', connect({
+    'connect', connect.server({
         root: __dirname + '/src',
         port: process.env.PORT || process.env.port || 9000
     })
