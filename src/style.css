@@ -9,6 +9,14 @@
     display: none;
 }
 
+a {
+    color: #036;
+}
+
+a:hover {
+    color: #69c;
+}
+
 body {
     font-family: "Source Sans Pro", sans-serif;
     margin: 30px;
@@ -18,7 +26,7 @@ button, select {
     font: inherit;
 }
 
-button {
+button, .button {
     background: #fff;
     border: 1px solid #ddd;
     border-bottom-color: #aaa;
@@ -29,6 +37,10 @@ button {
     font-size: 10px;
     font-weight: 600;
     padding: 3px 10px 2px;
+}
+
+.button {
+    text-decoration: none;
 }
 
 input.large {
@@ -58,6 +70,17 @@ input.large {
     color: #666;
 }
 
+.export {
+    background: #def;
+    margin-bottom: 5px;
+}
+
+.export:hover {
+    background: #9cf;
+    border-color: #7bf;
+    border-bottom-color: #39f;
+    color: #036;
+}
 
 .header {
     border-bottom: 1px solid #ccc;

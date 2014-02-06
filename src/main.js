@@ -12,20 +12,21 @@
         });
         return result;
     }
-    var search = parseQueryString(window.location.search.substr(1));
+    var GET = parseQueryString(window.location.search.substr(1));
 
-    if (search.fasthar_api) {
-        api_urls.fasthar = search.fasthar_api;
+    if (GET.fasthar_api) {
+        api_urls.fasthar = GET.fasthar_api;
     }
-    if (search.chromhar_api) {
-        api_urls.chromehar = search.chromehar_api;
+    if (GET.chromhar_api) {
+        api_urls.chromehar = GET.chromehar_api;
     }
 
     var urls = {
         chart: api_urls.fasthar + '/charts/{stat}?url={url}',
         har_fetch: api_urls.fasthar + '/har/fetch?ref={ref}&url={url}',
-        har_view: api_urls.chromehar + '/?url=' + api_urls.fasthar + '/har/history?ref={ref}&url={url}'
+        har: api_urls.fasthar + '/har/history?ref={ref}&url={url}'
     };
+    urls.har_view = api_urls.chromehar + '/?url=' + urls.har;
 
     function url(name, data) {
         var uri = urls[name];
@@ -41,30 +42,28 @@
 
     $stat.on('change', function() {
         var qs = '?stat=' + $(this).val();
-        if (search.ref) {
-            qs += '&ref=' + search.ref;
+        if (GET.ref) {
+            qs += '&ref=' + GET.ref;
         }
-        if (search.url) {
-            qs += '&url=' + search.url;
+        if (GET.url) {
+            qs += '&url=' + GET.url;
         }
         window.location.search = qs;
     });
 
-    if (!search.url) {
+    if (!GET.stat) {
+        GET.stat = 'sizes';
+        $stat.val('sizes').trigger('change');
+    }
+
+    $stat.find('[value="' + GET.stat + '"]').attr('selected', '');
+
+    if (!GET.url) {
         $('h1').html('<form>' +
-            '<input type="hidden" name="stat" value="' +
-            (search.stat || 'sizes') +
+            '<input type="hidden" name="stat" value="' + GET.stat +
             '"><input type="name" class="large" name="url" ' +
             'placeholder="Enter URL here"></form>'
         );
-    } else {
-        if (!search.stat) {
-            $stat.val('sizes').trigger('change');
-        }
-    }
-
-    if (search.stat) {
-        $stat.find('[value="' + search.stat + '"]').attr('selected', '');
     }
 
     $('.refresh').on('click', function() {
@@ -75,7 +74,7 @@
     });
 
     function harFetch() {
-        $.get(url('har_fetch', {ref: search.ref, url: search.url}));
+        $.get(url('har_fetch', {ref: GET.ref, url: GET.url}));
     }
 
     $stat.removeClass('hidden');
@@ -84,7 +83,7 @@
     var yAxisText;
     var yAxisTicks = 18;
 
-    switch (search.stat) {
+    switch (GET.stat) {
         case 'sizes':
             yAxisText = 'Size (KB)';
             yAxisFormat = function(d) {
@@ -114,17 +113,17 @@
             break;
     }
 
-    if (search.url) {
+    if (GET.url) {
         // To normalise the URLs (to contain trailing slashes).
         var a = document.createElement('a');
-        a.href = search.url;
-        search.url = a.href;
+        a.href = GET.url;
+        GET.url = a.href;
 
-        $('h1 a').text(search.url).attr('href', search.url);
-        $('title').text(search.url + ' | ' + $stat.find('[selected]').text() + ' | fastHAR');
+        $('h1 a').text(GET.url).attr('href', GET.url);
+        $('title').text(GET.url + ' | ' + $stat.find('[selected]').text() + ' | fastHAR');
 
         var chartUrl = url('chart',
-                           {stat: search.stat, ref: search.ref, url: search.url});
+                           {stat: GET.stat, ref: GET.ref, url: GET.url});
 
         $.getJSON(chartUrl, function(data) {
             var numItems = Object.keys(data).length;
@@ -185,8 +184,9 @@
                 },
                 point: {
                     onclick: function(d) {
-                        var src = url('har_view', {ref: data.labels[d.x], url: search.url});
-                        document.querySelector('iframe').setAttribute('src', src);
+                        var params = {ref: data.labels[d.x], url: GET.url};
+                        document.querySelector('iframe').setAttribute('src', url('har_view', params));
+                        document.querySelector('.export-options').innerHTML = '<a target="_blank" class="button export" href="' + url('har', params) + '">Export HAR</a>';
                     }
                 },
                 zoom: {
