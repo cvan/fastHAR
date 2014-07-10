@@ -27,6 +27,6 @@ To set up the URLs:
 ## Development
 
 Load from a page with an origin (i.e., a server). If you're running locally,
-use grunt to fire up a local server:
+use `gulp` to fire up a local server:
 
     DEBUG=1 OPEN=1 gulp connect
